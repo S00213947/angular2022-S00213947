@@ -1,0 +1,25 @@
+<div class="container-fluid">
+<div *ngIf="message" class="alert alert-warning alert-dismissible show" role="alert">
+    <strong>Opps</strong> {{message}}
+    <button type="button" class="btn-close" (click)="dismissAlert()" aria-label="Close"></button>
+  </div>
+
+<h2 *ngIf="message">{{message}}</h2>
+
+<app-cocktail-form *ngIf="showCocktailForm" (cocktailFormClose)="cocktailFormClose($event)" [cocktail]="currentCocktail"
+></app-cocktail-form>
+
+<button (click)="openAddCocktail()" *ngIf="!showCocktailForm" class="btn btn-lg btn-outline-primary">Add Cocktail</button>
+
+<button (click)="openEditCocktail()" *ngIf="!showCocktailForm" [disabled]="!currentCocktail"
+class="btn btn-lg btn-outline-primary">Edit Drink</button>
+
+<button (click)="deleteCocktail()" *ngIf="!showCocktailForm" [disabled]="!currentCocktail"
+class="btn btn-lg btn-outline-danger">Delete Drink</button>
+
+<app-cocktail-row *ngFor="let c of cocktailList" [cocktail]="c"
+(click)="clicked(c)"></app-cocktail-row>
+
+<app-cocktail-details *ngIf="currentCocktail" [cocktail]="currentCocktail"></app-cocktail-details>
+
+</div>

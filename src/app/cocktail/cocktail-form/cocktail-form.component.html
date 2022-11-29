@@ -1,0 +1,27 @@
+<h2>Please Enter cocktail Data</h2>
+
+<button type="button" class="btn-close" aria-label="Close" (click)="closeForm()"></button>
+
+
+ <form [formGroup]="cocktailForm" (ngSubmit) = "onSubmit()" class="form-group" class="container-md">
+
+    <div class="mb-3">
+        <label for="drinkName">Drink Name</label>
+        <input id="drinkName" type="text" formControlName="drinkName" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label for="ing1"> Ingredient 1:</label>
+        <input id="ing1" type="text" formControlName="ing1" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label for="measure1">Measure</label>
+        <input id="measure1" type="text" formControlName="measure1" class="form-control">
+    </div>
+ 
+
+
+    <button type="submit" [disabled] = "!cocktailForm.valid" >Submit</button>
+
+
+
+    </form>
