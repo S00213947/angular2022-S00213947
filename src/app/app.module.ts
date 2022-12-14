@@ -10,7 +10,8 @@ import { CocktailDetailsComponent } from './cocktail/cocktail-details/cocktail-d
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CocktailFormComponent } from './cocktail/cocktail-form/cocktail-form.component';
-
+import { AuthModule } from '@auth0/auth0-angular';
+import { environment } from 'src/enviroments/enviroment';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { CocktailFormComponent } from './cocktail/cocktail-form/cocktail-form.co
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AuthModule.forRoot({...environment.auth0,})
   ],
   providers: [],
   bootstrap: [AppComponent]
