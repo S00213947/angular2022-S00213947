@@ -11,7 +11,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CocktailFormComponent } from './cocktail/cocktail-form/cocktail-form.component';
 import { AuthModule } from '@auth0/auth0-angular';
+import { AuthHttpInterceptor } from '@auth0/auth0-angular';
 import { environment } from 'src/enviroments/enviroment';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HomeComponent } from './home/home.component';
+import { ProfileComponent } from './profile/profile.component';
+
 
 @NgModule({
   declarations: [
@@ -20,16 +25,25 @@ import { environment } from 'src/enviroments/enviroment';
     CocktailListComponent,
     CocktailRowComponent,
     CocktailDetailsComponent,
-    CocktailFormComponent
+    CocktailFormComponent,
+    HomeComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    AuthModule.forRoot({...environment.auth0,})
-  ],
-  providers: [],
+    AuthModule.forRoot({...environment.auth0,
+      httpInterceptor: {
+        allowedList: [`${environment.apiUri}/cocktails`],
+      },})
+    ],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthHttpInterceptor,
+    multi: true,
+  },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
