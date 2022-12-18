@@ -17,9 +17,12 @@ class="btn btn-lg btn btn-primary">Edit Drink</button>
 <button (click)="deleteCocktail()" *ngIf="!showCocktailForm" [disabled]="!currentCocktail"
 class="btn btn-lg btn btn-danger">Delete Drink</button>
 
-<app-cocktail-row *ngFor="let c of cocktailList" [cocktail]="c"
-(click)="clicked(c)"></app-cocktail-row>
-
+<div *ngIf="!showCocktailForm">
+<app-cocktail-row class="card"  *ngFor="let c of cocktailList" [cocktail]="c"
+(click)="clicked(c)"
+[class.bg-info]="isSelected(c)" [class.text-white]="isSelected(c)">
+</app-cocktail-row>
+</div>
 <app-cocktail-details *ngIf="currentCocktail" [cocktail]="currentCocktail"></app-cocktail-details>
 
 </div>
