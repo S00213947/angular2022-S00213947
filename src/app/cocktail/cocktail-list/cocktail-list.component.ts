@@ -50,12 +50,11 @@ export class CocktailListComponent implements OnInit {
         next: cocktail => {
           console.log(JSON.stringify(cocktail) + ' has been updated');
           this.message = " cocktail has been updated";
+          this.ngOnInit();
+          this.currentCocktail=undefined;
         },
         error: (err) => this.message = err
-      });
-    // so the updated list appears
-
-    this.ngOnInit();
+      }); 
   }
 
   cocktailFormClose(cocktail?: any): void {
@@ -80,12 +79,10 @@ addNewCocktail(newCocktail: Cocktail): void {
       next: cocktail => {
         console.log(JSON.stringify(cocktail) + ' has been added');
         this.message = "new cocktail has been added";
+        this.ngOnInit();
       },
       error: (err) => this.message = err
     });
-  // so the updated list appears
-
-  this.ngOnInit();
   }
 
 
@@ -97,17 +94,12 @@ addNewCocktail(newCocktail: Cocktail): void {
           next: cocktail => {
             console.log(JSON.stringify(cocktail) + ' has been deleted');
             this.message = "drink has been deleted";
+            this.ngOnInit();
+            this.currentCocktail=undefined;
           },
           error: (err) => this.message = err
         });
     }
-  
-    // so the updated list appears
-  
-      this.ngOnInit();
-      this.currentCocktail=undefined;
-  
-  
   }
   
   isSelected(cocktail: Cocktail): boolean {

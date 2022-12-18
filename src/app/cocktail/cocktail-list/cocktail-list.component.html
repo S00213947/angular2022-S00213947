@@ -9,13 +9,13 @@
 <app-cocktail-form *ngIf="showCocktailForm" (cocktailFormClose)="cocktailFormClose($event)" [cocktail]="currentCocktail"
 ></app-cocktail-form>
 
-<button (click)="openAddCocktail()" *ngIf="!showCocktailForm" class="btn btn-lg btn-outline-primary">Add Cocktail</button>
+<button (click)="openAddCocktail()" *ngIf="!showCocktailForm" class="btn btn-lg btn btn-primary">Add Cocktail</button>
 
 <button (click)="openEditCocktail()" *ngIf="!showCocktailForm" [disabled]="!currentCocktail"
-class="btn btn-lg btn-outline-primary">Edit Drink</button>
+class="btn btn-lg btn btn-primary">Edit Drink</button>
 
 <button (click)="deleteCocktail()" *ngIf="!showCocktailForm" [disabled]="!currentCocktail"
-class="btn btn-lg btn-outline-danger">Delete Drink</button>
+class="btn btn-lg btn btn-danger">Delete Drink</button>
 
 <app-cocktail-row *ngFor="let c of cocktailList" [cocktail]="c"
 (click)="clicked(c)"></app-cocktail-row>
