@@ -2,6 +2,8 @@ import { DOCUMENT } from '@angular/common';
 import { Component, Inject} from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 import { Router } from '@angular/router';
+import { DrinkReponse } from './cocktail/cocktailresponse';
+import { CocktailApiService } from './services/cocktail-api.service';
 
 @Component({
   selector: 'app-root',
@@ -11,12 +13,40 @@ import { Router } from '@angular/router';
 export class AppComponent {
   title = 'clientApp2022';
 
+cocktaildata: DrinkReponse | any;
+cocktailrandom: DrinkReponse | any;
+errorMessage:any;
 
   isAuthenticated$ = this.authService.isAuthenticated$
 
 
     
-  constructor(private router: Router, public authService: AuthService){}
+  constructor(private _cocktailservice:CocktailApiService, private router: Router, public authService: AuthService){}
+
+  getDrinkDetails(searchTerm:string) : boolean {
+    this._cocktailservice.getSearchData(searchTerm).subscribe(
+      cocktaildata => {
+        this.cocktaildata=cocktaildata;
+        console.log('drink name' + this.cocktaildata.name);
+      },
+      error => this.errorMessage = <any>error
+    );
+    return false;
+    }
+  
+    getrandomDetails() : boolean {
+      this._cocktailservice.getrandomData().subscribe(
+        cocktailrandom => {
+          this.cocktailrandom=cocktailrandom;
+          console.log('drink name' + this.cocktailrandom.name);
+        },
+        error => this.errorMessage = <any>error
+      );
+      return false;
+      }
+
+      
+  
   
 
 handleLogout() {

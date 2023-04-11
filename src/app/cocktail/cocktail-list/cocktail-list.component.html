@@ -1,6 +1,6 @@
 <div class="container-fluid">
 <div *ngIf="message" class="alert alert-warning alert-dismissible show" role="alert">
-    <strong>Opps</strong> {{message}}
+    
     <button type="button" class="btn-close" (click)="dismissAlert()" aria-label="Close"></button>
   </div>
 
@@ -8,14 +8,22 @@
 
 <app-cocktail-form *ngIf="showCocktailForm" (cocktailFormClose)="cocktailFormClose($event)" [cocktail]="currentCocktail"
 ></app-cocktail-form>
-
+<form class="form-inline">
+      
+  <input class="form-control mr-sm-2" type="text" name="cocktail-name" placeholder="Search for Cocktail" #searchterm  style="width: 20%;">
+  <button (click)="getDrinkDetails(searchterm.value)"type="submit" class="btn btn-outline-success" >Get Drink</button>
+<button (click)="getrandomDetails()"type="submit" class="btn btn-sm btn-outline-secondary" >Random Drink</button>
+</form>
+<!--
+  
 <button (click)="openAddCocktail()" *ngIf="!showCocktailForm" class="btn btn-lg btn btn-primary">Add Cocktail</button>
 
 <button (click)="openEditCocktail()" *ngIf="!showCocktailForm" [disabled]="!currentCocktail"
 class="btn btn-lg btn btn-primary">Edit Drink</button>
 
 <button (click)="deleteCocktail()" *ngIf="!showCocktailForm" [disabled]="!currentCocktail"
-class="btn btn-lg btn btn-danger">Delete Drink</button>
+class="btn btn-lg btn btn-danger">Delete Drink</button> 
+-->
 
 <div *ngIf="!showCocktailForm">
 <app-cocktail-row class="card"  *ngFor="let c of cocktailList" [cocktail]="c"
@@ -23,6 +31,60 @@ class="btn btn-lg btn btn-danger">Delete Drink</button>
 [class.bg-info]="isSelected(c)" [class.text-white]="isSelected(c)">
 </app-cocktail-row>
 </div>
-<app-cocktail-details *ngIf="currentCocktail" [cocktail]="currentCocktail"></app-cocktail-details>
+
+
+
+<div class="container text-info">
+    
+  <div class="container bg-dark text-info" *ngFor="let drink of cocktaildata.drinks" >
+
+ 
+      <h1>{{cocktaildata.strname}}</h1>
+       <h1>{{drink.strDrink}} </h1>
+       <img class="img-thumbnail rounded float-left w-25" src="{{drink.strDrinkThumb}}">
+       <div class="text-info">
+         <p>Ingredients</p>
+         <div >
+         <h4>{{drink.strIngredient1}} - {{drink.strMeasure1}}</h4>
+         <h4 *ngIf="drink.strIngredient2 != null">{{drink.strIngredient2}} - {{drink.strMeasure2}}</h4>
+         <h4 *ngIf="drink.strIngredient3 != null">{{drink.strIngredient3}} - {{drink.strMeasure3}}</h4>
+         <h4 *ngIf="drink.strIngredient4 != null">{{drink.strIngredient4}} - {{drink.strMeasure4}}</h4>
+         <h4 *ngIf="drink.strIngredient5 != null">{{drink.strIngredient5}} - {{drink.strMeasure5}}</h4>
+         <h4 *ngIf="drink.strIngredient6 != null">{{drink.strIngredient6}} - {{drink.strMeasure6}}</h4>
+         <h4 *ngIf="drink.strIngredient7 != null">{{drink.strIngredient7}} - {{drink.strMeasure7}}</h4>
+        </div>
+         <p>Instructions</p>
+         <h4>{{drink.strInstructions}}</h4>
+         <button class="btn btn-success">Add to Favourites</button>
+       </div>
+
+
+       
+</div>
+</div>
+
 
 </div>
+<div class="container bg-dark text-white" *ngFor="let drinkran of cocktailrandom.drinkran">
+  <h1>{{cocktailrandom.strname}}</h1>
+   <h1>{{drinkran.strDrink}} </h1>
+   <img class="img-thumbnail rounded float-left" src="{{drinkran.strDrinkThumb}}">
+   <div>
+     <p>Ingredients</p>
+     <div >
+     <h4>{{drinkran.strIngredient1}} - {{drinkran.strMeasure1}}</h4>
+     <h4 *ngIf="drinkran.strIngredient2 != null">{{drinkran.strIngredient2}} - {{drinkran.strMeasure2}}</h4>
+     <h4 *ngIf="drinkran.strIngredient3 != null">{{drinkran.strIngredient3}} - {{drinkran.strMeasure3}}</h4>
+     <h4 *ngIf="drinkran.strIngredient4 != null">{{drinkran.strIngredient4}} - {{drinkran.strMeasure4}}</h4>
+     <h4 *ngIf="drinkran.strIngredient5 != null">{{drinkran.strIngredient5}} - {{drinkran.strMeasure5}}</h4>
+     <h4 *ngIf="drinkran.strIngredient6 != null">{{drinkran.strIngredient6}} - {{drinkran.strMeasure6}}</h4>
+     <h4 *ngIf="drinkran.strIngredient7 != null">{{drinkran.strIngredient7}} - {{drinkran.strMeasure7}}</h4>
+    </div>
+     <p>Instructions</p>
+     <h4>{{drinkran.strInstructions}}</h4>
+     <button></button>
+   </div>
+  </div>
+
+<app-cocktail-details *ngIf="currentCocktail" [cocktail]="currentCocktail"></app-cocktail-details>
+

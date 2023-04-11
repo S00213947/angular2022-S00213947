@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Cocktail } from 'src/app/cocktail';
 import { CocktailService } from 'src/app/cocktail.service';
 import { FakecocktailService } from 'src/app/fakecocktail.service';
+import { CocktailApiService } from 'src/app/services/cocktail-api.service';
+import { DrinkReponse } from '../cocktailresponse';
+import { Observable, catchError, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-cocktail-list',
@@ -12,11 +15,14 @@ export class CocktailListComponent implements OnInit {
 
   cocktailList: Cocktail[] = [];
   message: string = "";
+  cocktaildata: DrinkReponse | any;
+cocktailrandom: DrinkReponse | any;
+errorMessage:any;
 
   currentCocktail : Cocktail | undefined;
   showCocktailForm: boolean = false;
 
-  constructor(private cocktailservice: CocktailService) { }
+  constructor(private _cocktailservice:CocktailApiService, private cocktailservice: CocktailService) { }
  // constructor(private cocktailservice: FakecocktailService) { }
   ngOnInit(): void {
     this.cocktailservice.getCocktails().subscribe({
@@ -41,6 +47,42 @@ export class CocktailListComponent implements OnInit {
   dismissAlert() {
     this.message = "";
   }
+
+  getDrinkDetails(searchTerm:string) : boolean {
+    this._cocktailservice.getSearchData(searchTerm).subscribe(
+      cocktaildata => {
+        this.cocktaildata=cocktaildata;
+        console.log('drink name' + this.cocktaildata.name);
+      },
+      error => this.errorMessage = <any>error
+    );
+    return false;
+    }
+
+    getrandomDetails() : boolean {
+      this._cocktailservice.getrandomData().subscribe(
+        cocktailrandom => {
+          this.cocktailrandom=cocktailrandom;
+          console.log('drink name' + this.cocktailrandom.name);
+        },
+        error => this.errorMessage = <any>error
+      );
+      return false;
+      }
+
+      getsandomDetails(): Observable<any> {
+        return this._cocktailservice.getrandomData().pipe(
+          tap(cocktailrandom => {
+            this.cocktailrandom = cocktailrandom;
+            console.log('drink name' + this.cocktailrandom.name);
+          }),
+          catchError(error => {
+            this.errorMessage = <any>error;
+            return of(null);
+          })
+        );
+      }
+
 
   updateCocktail(id: string, cocktail: Cocktail): void {
     console.log('updating ');
