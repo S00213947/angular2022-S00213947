@@ -41,7 +41,7 @@ faHeart = faHeart;
       this._cocktailservice.getrandomData().subscribe(
         cocktailrandom => {
           this.cocktailrandom=cocktailrandom;
-          console.log('drink name' + this.cocktailrandom.name);
+          console.log('drink name' + this.cocktailrandom.drinks[0].strDrink);
         },
         error => this.errorMessage = <any>error
       );

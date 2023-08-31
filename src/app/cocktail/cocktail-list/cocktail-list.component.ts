@@ -77,16 +77,18 @@ isFavorited: boolean = false;
     return false;
     }
 
-    getrandomDetails() : boolean {
+    getrandomDetails(): void {
       this._cocktailservice.getrandomData().subscribe(
         cocktailrandom => {
-          this.cocktailrandom=cocktailrandom;
-          console.log('drink name' + this.cocktailrandom.name);
+          this.cocktailrandom = cocktailrandom;
+          console.log('Cocktail Random Data:', this.cocktailrandom);
         },
-        error => this.errorMessage = <any>error
+        error => {
+          this.errorMessage = <any>error;
+          console.error('Error:', error);
+        }
       );
-      return false;
-      }
+    }
 
       addFavoriteCocktail(cocktailId: string): void {
         this.auth.user$.subscribe((user) => {

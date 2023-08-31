@@ -20,16 +20,16 @@ export class CocktailApiService {
   constructor(private http: HttpClient) { }
 
 
-  getrandomData(){
-    const emptyResults: DrinkReponse[] = [];
-    return this.http.get(this.random).pipe(
-        tap(data => console.log('Searchdata/error' + JSON.stringify(data))
-        ),
-        catchError(this.handleError)
+  getrandomData(): Observable<DrinkReponse[]> {
+    return this.http.get<DrinkReponse[]>(this.random).pipe(
+        tap(data => console.log('Random data', JSON.stringify(data))),
+        catchError(this.handleError),
+        map((data: any) => data['drinks'])
       );
   }
 
 
+  
 
 getSearchData(searchTerm: string){
   const emptyResults: DrinkReponse[] = [];
@@ -47,7 +47,6 @@ addToFavorites(userId: string, cocktail: any): Observable<any> {
       catchError(this.handleError)
     );
 }
-
 addFavorite(userId: string, cocktailId: string): Observable<any> {
   const url = `${this.apiUrl}/users/${userId}/profile`;
   return this.http.post(url, { cocktailId });

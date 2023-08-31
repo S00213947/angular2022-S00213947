@@ -31,6 +31,10 @@ export interface DrinkReponse{
  
  }
  
+ export interface ApiReponse {
+    drinks: DrinkReponse[];
+  }
+ 
  export class DBDrink{
      idDrink: string;
      strDrink: string;
