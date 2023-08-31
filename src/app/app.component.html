@@ -3,25 +3,30 @@
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Cocktail List</a>
-          </div>
+            <h1 class="navbar-brand" href="#">Cocktail List</h1>
+        </div>
         
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="mynavbar">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/cocktails" routerLinkActive="active">cocktails</a>
-                    
                 </li>
-                
+            </ul>
+            
+
+            <!-- This ul will be aligned to the right -->
+            <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
                     <a class="nav-link" *ngIf="isAuthenticated$ | async" routerLink="/profile"
                         routerLinkActive="active">Favourites</a>
                 </li>
             </ul>
         </div>
+    
 
 
 

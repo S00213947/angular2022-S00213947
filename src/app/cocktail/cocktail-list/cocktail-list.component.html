@@ -8,12 +8,14 @@
 
 <app-cocktail-form *ngIf="showCocktailForm" (cocktailFormClose)="cocktailFormClose($event)" [cocktail]="currentCocktail"
 ></app-cocktail-form>
-<form class="form-inline">
+<form class="form-inline" (submit)="$event.preventDefault()">
       
   <input class="form-control mr-sm-2" type="text" name="cocktail-name" placeholder="Search for Cocktail" #searchterm  style="width: 20%;">
   <button (click)="getDrinkDetails(searchterm.value)"type="submit" class="btn btn-outline-success" >Get Drink</button>
-<button (click)="getrandomDetails()"type="submit" class="btn btn-sm btn-outline-secondary" >Random Drink</button>
+  <!-- changing type ftom submit to button -->
+  <button (click)="getrandomDetails()"type="button" class="btn btn-sm btn-outline-secondary" >Random Drink</button>
 </form>
+
 <!--
   
 <button (click)="openAddCocktail()" *ngIf="!showCocktailForm" class="btn btn-lg btn btn-primary">Add Cocktail</button>
@@ -24,24 +26,25 @@ class="btn btn-lg btn btn-primary">Edit Drink</button>
 <button (click)="deleteCocktail()" *ngIf="!showCocktailForm" [disabled]="!currentCocktail"
 class="btn btn-lg btn btn-danger">Delete Drink</button> 
 -->
-
+<!--   
 <div *ngIf="!showCocktailForm">
 <app-cocktail-row class="card"  *ngFor="let c of cocktailList" [cocktail]="c"
 (click)="clicked(c)"
 [class.bg-info]="isSelected(c)" [class.text-white]="isSelected(c)">
 </app-cocktail-row>
 </div>
+-->
 
 
 
-<div class="container text-info">
-    
-  <div class="container bg-dark text-info" *ngFor="let drink of cocktaildata.drinks" >
+<div *ngIf="cocktaildata && cocktaildata.drinks" class="row">
+  
+  <div  class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 border" *ngFor="let drink of cocktaildata.drinks" >
 
  
-      <h1>{{cocktaildata.strname}}</h1>
+      
        <h1>{{drink.strDrink}} </h1>
-       <img class="img-thumbnail rounded float-left w-25" src="{{drink.strDrinkThumb}}">
+       <img class="img-thumbnail rounded float-left w-50" src="{{drink.strDrinkThumb}}">
        <div class="text-info">
          <p>Ingredients</p>
          <div >
@@ -55,14 +58,14 @@ class="btn btn-lg btn btn-danger">Delete Drink</button>
         </div>
          <p>Instructions</p>
          <h4>{{drink.strInstructions}}</h4>
-         <button class="btn btn-success">Add to Favourites</button>
-       </div>
-
-
-       
+         <button (click)="addFavoriteCocktail(drink.idDrink)">Add to Favorites</button>
+         
+          
+       </div>      
 </div>
 </div>
 
+<!--  
 
 </div>
 <div class="container bg-dark text-white" *ngFor="let drinkran of cocktailrandom.drinkran">
@@ -85,6 +88,7 @@ class="btn btn-lg btn btn-danger">Delete Drink</button>
      <button></button>
    </div>
   </div>
-
+  -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
 <app-cocktail-details *ngIf="currentCocktail" [cocktail]="currentCocktail"></app-cocktail-details>
 

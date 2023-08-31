@@ -4,6 +4,8 @@ import { AuthService } from '@auth0/auth0-angular';
 import { Router } from '@angular/router';
 import { DrinkReponse } from './cocktail/cocktailresponse';
 import { CocktailApiService } from './services/cocktail-api.service';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +18,7 @@ export class AppComponent {
 cocktaildata: DrinkReponse | any;
 cocktailrandom: DrinkReponse | any;
 errorMessage:any;
+faHeart = faHeart;
 
   isAuthenticated$ = this.authService.isAuthenticated$
 

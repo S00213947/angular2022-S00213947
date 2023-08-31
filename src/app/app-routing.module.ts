@@ -4,6 +4,7 @@ import { AuthGuard } from '@auth0/auth0-angular';
 import { CocktailListComponent } from './cocktail/cocktail-list/cocktail-list.component';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -13,7 +14,8 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes),FontAwesomeModule],
+  exports: [RouterModule],
+  
 })
 export class AppRoutingModule { }

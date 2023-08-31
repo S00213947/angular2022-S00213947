@@ -5,11 +5,20 @@ import { FakecocktailService } from 'src/app/fakecocktail.service';
 import { CocktailApiService } from 'src/app/services/cocktail-api.service';
 import { DrinkReponse } from '../cocktailresponse';
 import { Observable, catchError, of, tap } from 'rxjs';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { AuthService } from '@auth0/auth0-angular';
+
+
+library.add(faHeart);
 
 @Component({
   selector: 'app-cocktail-list',
   templateUrl: './cocktail-list.component.html',
-  styleUrls: ['./cocktail-list.component.css']
+  styleUrls: ['./cocktail-list.component.css'],
+  
+  
 })
 export class CocktailListComponent implements OnInit {
 
@@ -18,11 +27,15 @@ export class CocktailListComponent implements OnInit {
   cocktaildata: DrinkReponse | any;
 cocktailrandom: DrinkReponse | any;
 errorMessage:any;
+icon=faHeart;
+isFavorited: boolean = false;
+
+
 
   currentCocktail : Cocktail | undefined;
   showCocktailForm: boolean = false;
 
-  constructor(private _cocktailservice:CocktailApiService, private cocktailservice: CocktailService) { }
+  constructor(private _cocktailservice:CocktailApiService,public auth: AuthService, private cocktailservice: CocktailService) { }
  // constructor(private cocktailservice: FakecocktailService) { }
   ngOnInit(): void {
     this.cocktailservice.getCocktails().subscribe({
@@ -48,6 +61,11 @@ errorMessage:any;
     this.message = "";
   }
 
+  toggleFavourite() 
+  {
+    this.isFavorited = !this.isFavorited;
+  }
+
   getDrinkDetails(searchTerm:string) : boolean {
     this._cocktailservice.getSearchData(searchTerm).subscribe(
       cocktaildata => {
@@ -70,6 +88,21 @@ errorMessage:any;
       return false;
       }
 
+      addFavoriteCocktail(cocktailId: string): void {
+        this.auth.user$.subscribe((user) => {
+          if (user) {
+            const userId = user!.sub!;
+            this._cocktailservice.addFavorite(userId, cocktailId).subscribe((response) => {
+              console.log('Cocktail added to favorites', response);
+            });
+          } else {
+            console.error('User Id is undefined');
+          }
+        });
+      }
+      
+     
+
       getsandomDetails(): Observable<any> {
         return this._cocktailservice.getrandomData().pipe(
           tap(cocktailrandom => {
@@ -82,6 +115,7 @@ errorMessage:any;
           })
         );
       }
+
 
 
   updateCocktail(id: string, cocktail: Cocktail): void {
