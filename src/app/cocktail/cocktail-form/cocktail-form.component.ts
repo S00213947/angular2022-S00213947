@@ -21,9 +21,9 @@ export class CocktailFormComponent implements OnInit {
     
     console.table(this.cocktail)
     this.cocktailForm  = new FormGroup({
-      drinkName: new FormControl (this.cocktail?.drinkName, [Validators.required, Validators.minLength(2)]),
-      ing1: new FormControl (this.cocktail?.ing1, [Validators.required]),
-      measure1: new FormControl(this.cocktail?.measure1,[Validators.required]),
+      strDrink: new FormControl (this.cocktail?.strDrink, [Validators.required, Validators.minLength(2)]),
+      strIngredient1: new FormControl (this.cocktail?.strIngredient1, [Validators.required]),
+      strMeasure1: new FormControl(this.cocktail?.strMeasure1,[Validators.required]),
       
       })
      
@@ -48,7 +48,7 @@ get title() {
   return this.cocktailForm?.get('drinkName');
 }
 get year_written() {
-  return this.cocktailForm?.get('ing1');
+  return this.cocktailForm?.get('strIngredient1');
 }
 
 

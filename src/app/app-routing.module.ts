@@ -5,12 +5,13 @@ import { CocktailListComponent } from './cocktail/cocktail-list/cocktail-list.co
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FavoritesComponent } from './favorites/favorites.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'cocktails',component: CocktailListComponent},
-  {path: 'profile', component: ProfileComponent,
-  canActivate: [AuthGuard]}
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'favorites', component: FavoritesComponent, canActivate: [AuthGuard] } 
 ];
 
 @NgModule({

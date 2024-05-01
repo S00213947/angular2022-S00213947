@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { environment } from 'src/enviroments/enviroment';
 import { Cocktail } from './cocktail';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,12 +17,40 @@ export class CocktailService {
 
     console.log("get cocktails called" );
 
-    return this.http.get<Cocktail[]>(`${this.dataUri}`)
-    .pipe(
-      retry(3),
-     // catchError(this.handleError)
-     catchError(this.handleError)
+    return this.http.get<{drinks: any[]}>(`${this.dataUri}`).pipe(
+      map(response => response.drinks.map(drink => this.transformToCocktail(drink)))
     );
+  }
+
+  private transformToCocktail(drink: any): Cocktail {
+    return {
+      idDrink: drink.idDrink,
+      strDrink: drink.strDrink,
+      strIngredient1: drink.strIngredient1,
+      strIngredient2: drink.strIngredient2,
+      strIngredient3: drink.strIngredient3,
+      strMeasure1: drink.strMeasure1,
+      strMeasure2: drink.strMeasure2,
+      strMeasure3: drink.strMeasure3,
+      strInstructions: drink.strInstructions
+    };
+  }
+
+  addToFavorites(cocktail: any) {
+   // return this.http.post(this.dataUri + '/favorites', cocktail).subscribe(
+      return this.http.post(this.dataUri + '/users', cocktail).subscribe(
+      response => console.log('Cocktail favorited:', response),
+      error => console.error('Error favoriting cocktail:', error)
+    );
+  }
+
+
+  getCocktailById(cocktailId: string): Observable<Cocktail> {
+    if (!cocktailId) {
+      console.error('Cocktail ID is undefined');
+      return throwError(() => new Error('Cocktail ID is undefined'));
+    }
+    return this.http.get<Cocktail>(`${this.dataUri}/${cocktailId}`);
   }
 
   addCocktail(cocktail: Cocktail): Observable<Cocktail> {

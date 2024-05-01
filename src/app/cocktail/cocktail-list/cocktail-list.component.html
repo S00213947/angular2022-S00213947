@@ -17,53 +17,29 @@
 </div>
 </form>
 
-<!--
-  
-<button (click)="openAddCocktail()" *ngIf="!showCocktailForm" class="btn btn-lg btn btn-primary">Add Cocktail</button>
-
-<button (click)="openEditCocktail()" *ngIf="!showCocktailForm" [disabled]="!currentCocktail"
-class="btn btn-lg btn btn-primary">Edit Drink</button>
-
-<button (click)="deleteCocktail()" *ngIf="!showCocktailForm" [disabled]="!currentCocktail"
-class="btn btn-lg btn btn-danger">Delete Drink</button> 
--->
-<!--   
-<div *ngIf="!showCocktailForm">
-<app-cocktail-row class="card"  *ngFor="let c of cocktailList" [cocktail]="c"
-(click)="clicked(c)"
-[class.bg-info]="isSelected(c)" [class.text-white]="isSelected(c)">
-</app-cocktail-row>
-</div>
--->
-
-
 
 <div *ngIf="cocktaildata && cocktaildata.drinks" class="row">
-  
-  <div  class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 border" *ngFor="let drink of cocktaildata.drinks" >
+  <div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 border" *ngFor="let drink of cocktaildata.drinks">
+    <h1>{{drink.strDrink}}</h1>
+    <img class="img-thumbnail rounded float-left w-50" src="{{drink.strDrinkThumb}}">
+    <div class="text-info">
+      <p>Ingredients</p>
+      <div>
+        <h4>{{drink.strIngredient1}} - {{drink.strMeasure1}}</h4>
+        <h4 *ngIf="drink.strIngredient2 != null">{{drink.strIngredient2}} - {{drink.strMeasure2}}</h4>
+        <h4 *ngIf="drink.strIngredient3 != null">{{drink.strIngredient3}} - {{drink.strMeasure3}}</h4>
+        <h4 *ngIf="drink.strIngredient4 != null">{{drink.strIngredient4}} - {{drink.strMeasure4}}</h4>
+        <h4 *ngIf="drink.strIngredient5 != null">{{drink.strIngredient5}} - {{drink.strMeasure5}}</h4>
+        <h4 *ngIf="drink.strIngredient6 != null">{{drink.strIngredient6}} - {{drink.strMeasure6}}</h4>
+        <h4 *ngIf="drink.strIngredient7 != null">{{drink.strIngredient7}} - {{drink.strMeasure7}}</h4>
+      </div>
+      <p>Instructions</p>
+      <h4>{{drink.strInstructions}}</h4>
+      <!--<button (click)="addToFavorites(drink.idDrink)">Add to Favorites</button> -->
+      <button *ngIf="drink.idDrink" (click)="addToFavorites(drink.idDrink)">Add to Favorites</button>
 
- 
-      
-       <h1>{{drink.strDrink}} </h1>
-       <img class="img-thumbnail rounded float-left w-50" src="{{drink.strDrinkThumb}}">
-       <div class="text-info">
-         <p>Ingredients</p>
-         <div >
-         <h4>{{drink.strIngredient1}} - {{drink.strMeasure1}}</h4>
-         <h4 *ngIf="drink.strIngredient2 != null">{{drink.strIngredient2}} - {{drink.strMeasure2}}</h4>
-         <h4 *ngIf="drink.strIngredient3 != null">{{drink.strIngredient3}} - {{drink.strMeasure3}}</h4>
-         <h4 *ngIf="drink.strIngredient4 != null">{{drink.strIngredient4}} - {{drink.strMeasure4}}</h4>
-         <h4 *ngIf="drink.strIngredient5 != null">{{drink.strIngredient5}} - {{drink.strMeasure5}}</h4>
-         <h4 *ngIf="drink.strIngredient6 != null">{{drink.strIngredient6}} - {{drink.strMeasure6}}</h4>
-         <h4 *ngIf="drink.strIngredient7 != null">{{drink.strIngredient7}} - {{drink.strMeasure7}}</h4>
-        </div>
-         <p>Instructions</p>
-         <h4>{{drink.strInstructions}}</h4>
-         <button (click)="addFavoriteCocktail(drink.idDrink)">Add to Favorites</button>
-         
-          
-       </div>      
-</div>
+    </div>
+  </div>
 </div>
 
 <div *ngIf="cocktailrandom" class="row">

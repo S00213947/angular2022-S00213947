@@ -9,7 +9,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { AuthService } from '@auth0/auth0-angular';
-
+import { FavoritesService } from 'src/app/favorites.service';
 
 library.add(faHeart);
 
@@ -34,16 +34,21 @@ isFavorited: boolean = false;
 
   currentCocktail : Cocktail | undefined;
   showCocktailForm: boolean = false;
+ 
 
-  constructor(private _cocktailservice:CocktailApiService,public auth: AuthService, private cocktailservice: CocktailService) { }
+  constructor(private _cocktailservice:CocktailApiService,public auth: AuthService, private cocktailservice: CocktailService,private favoritesService: FavoritesService) { }
  // constructor(private cocktailservice: FakecocktailService) { }
   ngOnInit(): void {
     this.cocktailservice.getCocktails().subscribe({
       next: (value: Cocktail[] )=> this.cocktailList = value,
       complete: () => console.log("cocktail service finished"),
-      error: (mess) => this.message = mess
-    })
+      error: (err) => {
+        console.error('Failed to load cocktails:', err);
+        this.message = 'Failed to load cocktails';
+      }
+    });
   }
+
   clicked (cocktail: Cocktail): void {
     this.currentCocktail = cocktail;
   }
@@ -85,9 +90,32 @@ isFavorited: boolean = false;
         },
         error => {
           this.errorMessage = <any>error;
-          console.error('Error:', error);
+          console.error('Error fetching random cocktail:', error);
         }
       );
+    }
+
+    addToFavorites(cocktail: Cocktail): void {
+      if (!cocktail || !cocktail.idDrink) {
+        console.error('Attempt to add a drink with undefined or null ID');
+        return;
+      }
+    
+      this.favoritesService.addToFavorites(cocktail).subscribe({
+        next: (response) => console.log('Favorite added successfully!', response),
+        error: (err) => {
+          console.error('Error adding to favorites:', err);
+          this.message = 'Error adding to favorites';
+        }
+      });
+    }
+    
+    removeFromFavorites(cocktail: Cocktail): void {
+      if (!cocktail.idDrink) {
+        console.error('Attempt to remove a cocktail with undefined ID');
+        return;
+      }
+      this.favoritesService.removeFromFavorites(cocktail.idDrink);
     }
 
       addFavoriteCocktail(cocktailId: string): void {
@@ -146,7 +174,7 @@ isFavorited: boolean = false;
      this.addNewCocktail(cocktail);
     }
     else {
-     this.updateCocktail(this.currentCocktail._id, cocktail)
+     this.updateCocktail(this.currentCocktail.idDrink, cocktail)
     }
   }
 
@@ -162,12 +190,13 @@ addNewCocktail(newCocktail: Cocktail): void {
       error: (err) => this.message = err
     });
   }
+  
 
 
   deleteCocktail() {
     console.log('deleting a drink ');
     if (this.currentCocktail) {
-      this.cocktailservice.deleteCocktail(this.currentCocktail._id)
+      this.cocktailservice.deleteCocktail(this.currentCocktail.idDrink)
         .subscribe({
           next: cocktail => {
             console.log(JSON.stringify(cocktail) + ' has been deleted');
@@ -185,7 +214,7 @@ addNewCocktail(newCocktail: Cocktail): void {
       return false;
     }
     else {
-      return cocktail._id === this.currentCocktail._id;
+      return cocktail.idDrink === this.currentCocktail.idDrink;
   
     }
   }

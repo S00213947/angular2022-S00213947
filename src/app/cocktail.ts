@@ -1,12 +1,12 @@
 export interface Cocktail {
-    _id: string,
-    drinkName: String,
-    ing1: string,
-    ing2: string,
-    ing3: string,
-    measure1: string,
-    measure2: string,
-    measure3: string,
-    instructions: string
+    idDrink: string, //drinkid
+    strDrink: String, //drinkname
+    strIngredient1: string,
+    strIngredient2: string,
+    strIngredient3: string,
+    strMeasure1: string,
+    strMeasure2: string,
+    strMeasure3: string,
+    strInstructions: string
     
 }
