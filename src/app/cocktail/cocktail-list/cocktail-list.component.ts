@@ -75,6 +75,7 @@ isFavorited: boolean = false;
     this._cocktailservice.getSearchData(searchTerm).subscribe(
       cocktaildata => {
         this.cocktaildata=cocktaildata;
+        console.log('   this.cocktaildata: ',    this.cocktaildata);
         console.log('drink name' + this.cocktaildata.name);
       },
       error => this.errorMessage = <any>error
@@ -96,6 +97,7 @@ isFavorited: boolean = false;
     }
 
     addToFavorites(cocktail: Cocktail): void {
+      console.log('cocktail: ', cocktail);
       if (!cocktail || !cocktail.idDrink) {
         console.error('Attempt to add a drink with undefined or null ID');
         return;

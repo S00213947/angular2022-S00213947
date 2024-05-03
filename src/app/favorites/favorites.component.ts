@@ -31,8 +31,11 @@ addFavorite(cocktail: Cocktail): void {
 
 removeFavorite(cocktailId: string): void {
   this.favoritesService.removeFromFavorites(cocktailId).subscribe({
-      next: () => {
-          console.log('Favorite removed!');
+      next: (status) => {
+          console.log('Favorite removed!',status);
+
+          this.favorites.splice(this.favorites.findIndex((cocktail)=>cocktail.idDrink === cocktailId ),1)
+        this.favorites = [... this.favorites]
           // Optionally refresh the local list if needed
       },
       error: (error) => console.error('Error removing favorite:', error)

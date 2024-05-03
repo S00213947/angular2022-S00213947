@@ -18,7 +18,7 @@ export class CocktailService {
     console.log("get cocktails called" );
 
     return this.http.get<{drinks: any[]}>(`${this.dataUri}`).pipe(
-      map(response => response.drinks.map(drink => this.transformToCocktail(drink)))
+      map(response => response?.drinks?.map(drink => this.transformToCocktail(drink)))
     );
   }
 
@@ -29,9 +29,17 @@ export class CocktailService {
       strIngredient1: drink.strIngredient1,
       strIngredient2: drink.strIngredient2,
       strIngredient3: drink.strIngredient3,
+      strIngredient4: drink.strIngredient4,
+      strIngredient5: drink.strIngredient5,
+      strIngredient6: drink.strIngredient6,
+      strIngredient7: drink.strIngredient7,
       strMeasure1: drink.strMeasure1,
       strMeasure2: drink.strMeasure2,
       strMeasure3: drink.strMeasure3,
+      strMeasure4: drink.strMeasure4,
+      strMeasure5: drink.strMeasure5,
+      strMeasure6: drink.strMeasure6,
+      strMeasure7: drink.strMeasure7,
       strInstructions: drink.strInstructions
     };
   }
