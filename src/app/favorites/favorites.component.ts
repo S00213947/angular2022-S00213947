@@ -53,3 +53,4 @@ refreshFavorites(): void {
 }
 
 }
+
